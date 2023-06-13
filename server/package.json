@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "prisma": {
+    "seed": "node --experimental-modules prisma/seed.mjs"
+  },
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.15.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "podcast-api": "^2.0.3"
+  }
+}

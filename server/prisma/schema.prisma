@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String        @id @default(cuid())
+  name            String?
+  email           String?       @unique
+  emailVerified   DateTime?
+  image           String?
+  hearts          Heart[]
+}
+
+model Genre {
+  id              Int            @unique
+  name            String
+  channels        GenresOnChannels[]
+}
+
+model Channel {
+  id              String          @id @default(cuid()) 
+  title           String
+  publisher       String          
+  thumbnail       String                  
+  genres          GenresOnChannels[]
+  episodes        Episode[]
+  channelHearts   ChannelHeart[]
+}
+
+model GenresOnChannels {
+  channel         Channel         @relation(fields: [channelId], references: [id])
+  channelId       String
+  genres          Genre           @relation(fields: [genreId], references: [id])
+  genreId         Int
+
+  @@id([channelId, genreId])
+}
+
+model Episode {
+  id              String          @id @default(cuid()) 
+  title           String
+  thumbnail       String
+  channelId       String
+  channel         Channel         @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  episodeHearts   EpisodeHeart[]
+}
+
+model Heart {
+  id                String          @id @default(cuid()) 
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  channelHearts     ChannelHeart[]   
+  episodeHearts     EpisodeHeart[]
+}
+
+model ChannelHeart {
+  id          String    @id @default(cuid())
+  heartId     String
+  channelId   String
+  heart       Heart     @relation(fields: [heartId], references: [id], onDelete: Cascade)
+  channel     Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+}
+
+model EpisodeHeart {
+  id          String    @id @default(cuid())
+  heartId     String
+  episodeId   String
+  heart       Heart     @relation(fields: [heartId], references: [id])
+  episode     Episode   @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+}
+
+
+
