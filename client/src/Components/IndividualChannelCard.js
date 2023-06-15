@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-import { useDispatch } from 'react-redux';
-import { createChannel } from '../actions/channels';
-
 const IndividualChannelCard = (props) => {
   const { channel } = props;
-  const { title, image } = channel;
-  const dispatch = useDispatch();
-
-  useEffect = (() => {
-    const newChannel = {
-      title: title,
-    }
-    dispatch(createChannel(newChannel));
-  }, [channel])
+  const { title, thumbnail } = channel;
 
   return (
     <Grid
@@ -34,7 +23,7 @@ const IndividualChannelCard = (props) => {
         }}
       >
         <img
-          src={image}
+          src={thumbnail}
           style={{
             height: '220px',
             objectFit: 'cover'

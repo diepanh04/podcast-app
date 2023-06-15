@@ -8,7 +8,7 @@ const Dashboard = () => {
     <div style={{ backgroundColor: '#EDE4E0' }}> 
       <Grid>
         <Grid item xs={12}>
-          <GetBestChannelsByGenre genreId="144"/>
+          <GetBestChannelsByGenre genreId="93"/>
           {/* <GetBestChannelsByGenre genreId="93"/>
           <GetBestChannelsByGenre genreId="127"/> */}
         </Grid>

@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import users from './users';
-import channels from './channels';
+import GenreReducer from './genres.js';
 
-export const reducers = combineReducers({ channels });
+export const reducers = combineReducers({ GenreReducer });

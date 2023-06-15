@@ -1,28 +1,41 @@
 import prismaClient from "../prismaClient.js";
 import { Client } from 'podcast-api';
-const client = Client({ apiKey: '6f228db1aec840ec96932ebdc92138e8' });
+const client = Client({ apiKey: '62d8df21df004406a436454ce14733f1' });
 
 const seedEpisodes = async () => {
   try {
     const channels = await prismaClient.channel.findMany();
-    const promises = channels.slice(150,160).map(async (channel) => {
+    const promises = channels.map(async (channel) => {
       const channelId = channel.id;
-      const response = await client.fetchEpisodeById({
-        id: channelId,
-      });
-      const channels = response.data.podcasts;
-      const channelData = channels.map((channel) => ({
-        id: channel.id,
-        title: channel.title,
-        publisher: channel.publisher,
-        thumbnail: channel.thumbnail,
-      }));
 
-      return prismaClient.channel.createMany({
-        data: channelData,
-        skipDuplicates: true,
-      });
-    });
+      const allEpisodes = [];
+      const nextEpisodePubDate = null;
+
+      do {
+        const response = await client.fetchPodcastById({
+          id: channelId,
+          sort: 'recent_first',
+          next_episode_pub_date: nextEpisodePubDate,
+        });
+        const episodes = response.data.episodes;
+        allEpisodes = allEpisodes.concat(episodes);
+        nextEpisodePubDate = response.data.next_episode_pub_date;
+      } while (nextEpisodePubDate);
+
+      for (const episode of allEpisodes) {
+
+        const episodeData = {
+          id: episode.id,
+          title: episode.title,
+          thumbnail: episode.thumbnail,
+          channelId: channelId,
+        }
+
+        await prismaClient.episode.create({
+          data: episodeData,
+        })
+      }
+    })
 
     await Promise.all(promises);
     console.log('Channel data seeded successfully.');

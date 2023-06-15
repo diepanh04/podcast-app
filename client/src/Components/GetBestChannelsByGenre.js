@@ -9,26 +9,19 @@ import Button from '@mui/material/Button';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import IndividualChannelCard from './IndividualChannelCard';
 
-import { useDispatch } from 'react-redux';
-import { createChannel } from '../actions/channels.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { getChannelsByGenre } from '../actions/genres.js'
 
 import ShortPodcastList from './ShortPodcastList';
-import prismaClient from '../../../server/prisma/prismaClient';
 
 const GetBestChannelsByGenre = (props) => {
   const { genreId } = props;
-  const [channels, setChannels] = useState([]);
   const [genre, setGenre] = useState("");
   const dispatch = useDispatch();
-
   useEffect( async() => {
-    const channels = await prismaClient.channel.findMany({
-      include: {
-        
-      }
-    })
-
+    dispatch(getChannelsByGenre(genreId));
   }, [genreId]);
+  const channels = useSelector((state) => state);
 
   return (
     <Grid>
@@ -38,7 +31,7 @@ const GetBestChannelsByGenre = (props) => {
           <ArrowRightIcon sx={{ fontSize: '40px' }} />
         </IconButton>
       </div>
-      <ShortPodcastList channels={channels.slice(0,4)} />
+      <ShortPodcastList channels={channels} />
     </Grid>
   );
 };
