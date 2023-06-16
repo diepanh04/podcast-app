@@ -1,21 +1,15 @@
-const GenreReducer = (
-  state = {
-    genres: [],
-    channels: [],
-    genreId: 0,
-  },
-  action = { type: '', payload: null },
-) => {
+export default (genres = {}, action) => {
   switch (action.type) {
-    case 'GET_CHANNELS_BY_GENRE': {
-      return {
-        ...state,
-        channels: action.payload,
-      };
+    case 'GET_CHANNELS_BY_GENRE_NAME': {
+       const { name, channels } = action.payload;
+       return {
+        ...genres,
+        [name]: {
+          channels: channels,
+        } 
+       }
     }
     default:
-      return state;
+      return genres;
   }
-};
-
-export default GenreReducer;
+}

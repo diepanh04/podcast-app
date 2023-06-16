@@ -1,18 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import IndividualChannelCard from './IndividualChannelCard';
+import GetChannelsByGenreName from './GetChannelsByGenreName';
 
 const ShortPodcastList = (props) => {
-  const { channels } = props;
+  const { genreName } = props;
 
   return (
-    <Grid container spacing={3}>
-      {channels.map((channel) => (
-        <Grid item xs={3}>
-          <IndividualChannelCard channel={channel} />
-        </Grid>
-      ))}
+    <Grid>
+      <Link
+        to={`/${genreName}`}
+        style={{
+          textDecoration: 'none',
+          color: '#665A48',
+          display: 'flex',
+        }}  
+      >
+        <Typography
+          sx={{
+            fontSize: '25px',
+            marginBottom: '10px'
+          }}
+        >
+          {genreName}
+        </Typography>
+        <ArrowRightIcon
+          sx={{
+            fontSize: '40px'
+          }}
+        />
+      </Link>
+      <GetChannelsByGenreName genreName={genreName} short={true}/>
     </Grid>
   )
 }

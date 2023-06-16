@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
 
-import GenreReducer from './genres.js';
+import genres from './genres.js';
 
-export const reducers = combineReducers({ GenreReducer });
+export const reducers = combineReducers({ genres });

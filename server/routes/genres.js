@@ -1,8 +1,8 @@
 import express from 'express';
-import { getChannelsByGenre } from '../controllers/genres.js';
+import { getChannelsByGenreName } from '../controllers/genres.js';
 
 const router = express.Router();
 
-router.get('/:id', getChannelsByGenre);
+router.get('/:name', getChannelsByGenreName);
 
 export default router;
