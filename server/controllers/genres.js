@@ -3,6 +3,17 @@ import prismaClient from '../prisma/prismaClient.js';
 
 const router = express.Router();
 
+export const getAllGenres = async(req, res) => {
+  try {
+    const genres = await prismaClient.genre.findMany({
+      select: { name: true }
+    });
+    res.status(200).json(genres);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const getChannelsByGenreName = async (req, res) => {
   const genreName = req.params.name;
   try {

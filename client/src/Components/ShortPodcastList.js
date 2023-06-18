@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import IndividualChannelCard from './IndividualChannelCard';
 import GetChannelsByGenreName from './GetChannelsByGenreName';
 
 const ShortPodcastList = (props) => {
@@ -18,12 +17,14 @@ const ShortPodcastList = (props) => {
           textDecoration: 'none',
           color: '#665A48',
           display: 'flex',
+          alignItems: 'center'
         }}  
       >
         <Typography
           sx={{
-            fontSize: '25px',
-            marginBottom: '10px'
+            fontSize: '30px',
+            marginBottom: '10px',
+            fontWeight: 'bold'
           }}
         >
           {genreName}

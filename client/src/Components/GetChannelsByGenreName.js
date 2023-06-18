@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getChannelsByGenreName } from '../actions/genres.js';
 import IndividualChannelCard from './IndividualChannelCard.js';
 
@@ -15,14 +13,13 @@ const GetChannelsByGenreName = (props) => {
     dispatch(getChannelsByGenreName(genreName));
   }, [genreName]);
 
-  const { channels } = useSelector((state) => state.genres[genreName]) || [];
-  console.log(channels);
+  const channels = useSelector((state) => state.genres[genreName]);
 
   return (
     <Grid container spacing={3}>
       {channels && short &&
         channels.slice(0, 6).map((channel) => (
-          <Grid item xs={2} key={channel.id}>
+          <Grid item sm={6} md={4} lg={2} key={channel.id}>
             <IndividualChannelCard channel={channel} />
           </Grid>
       ))}

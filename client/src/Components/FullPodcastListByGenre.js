@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import IndividualChannelCard from './IndividualChannelCard';
 import { Typography } from '@mui/material';
 import GetChannelsByGenreName from './GetChannelsByGenreName';
 
@@ -10,7 +9,14 @@ const FullPodcastListByGenre = (props) => {
 
   return (
     <Grid>
-      <Typography>
+      <Typography
+        sx={{
+          fontSize: '30px',
+          fontWeight: 'bold',
+          color: '#665A48',
+          marginBottom: '30px'
+        }}
+      >
         {genreName}
       </Typography>
       <GetChannelsByGenreName genreName={genreName} short={false}/>

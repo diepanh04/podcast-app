@@ -6,7 +6,7 @@ const ChannelsByGenre = () => {
   const { genre } = useParams();
 
   return (
-    <div>
+    <div style={{ padding: '50px' }}>
       <FullPodcastListByGenre genreName={genre}/>
     </div>
   )

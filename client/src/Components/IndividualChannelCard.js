@@ -8,7 +8,7 @@ const styles = {
     padding: '10%',
     height: '30vh',
     marginBottom: '15%',
-    backgroundColor: 'rgb(159,135,114,0.3)',
+    backgroundColor: 'rgb(159, 135, 114, 0.3)',
     width: '100%',
   },
   img: {
@@ -19,12 +19,15 @@ const styles = {
     textAlign: 'center',
   },
   titleContainer: {
-    marginTop: '5px'
+    marginTop: '5px',
   },
   title: {
     fontSize: '18px',
-  }
-}
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+};
 
 const IndividualChannelCard = (props) => {
   const { channel, classes } = props;
@@ -36,15 +39,15 @@ const IndividualChannelCard = (props) => {
         <img src={thumbnail} style={styles.img} />
       </Grid>
       <Grid item sx={styles.titleContainer}>
-        <Typography style={styles.title}>{title}</Typography>
+        <div style={styles.title}>{title}</div>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
 IndividualChannelCard.propTypes = {
   channel: PropTypes.object.isRequired,
   classes: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default IndividualChannelCard
+export default IndividualChannelCard;

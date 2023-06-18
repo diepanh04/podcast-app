@@ -6,18 +6,23 @@ import Dashboard from './Pages/Dashboard.js';
 import Signin from './Pages/Signin.js';
 import Register from './Pages/Register.js';
 import ChannelsByGenre from './Pages/ChannelsByGenre.js';
+import AllGenres from './Pages/AllGenres.js';
+import NavBar from './Components/NavBar.js';
 
 function App() {
   return (
     <Router>
       <div style={{ backgroundColor: '#EDE4E0' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/:genre" element={<ChannelsByGenre />} />
-        </Routes>
+        <NavBar>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/:genre" element={<ChannelsByGenre />} />
+            <Route path="/genres" element={<AllGenres />} />
+          </Routes>
+        </NavBar>
       </div>
     </Router>
   );
