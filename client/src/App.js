@@ -1,31 +1,34 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import Home from './Pages/Home.js';
-import Dashboard from './Pages/Dashboard.js';
-import Signin from './Pages/Signin.js';
-import Register from './Pages/Register.js';
-import ChannelsByGenre from './Pages/ChannelsByGenre.js';
-import AllGenres from './Pages/AllGenres.js';
-import NavBar from './Components/NavBar.js';
+import { useDispatch, useSelector } from 'react-redux';
+import AuthorizedRoutes from './routes/AuthorizedRoutes.js';
+import UnauthorizedRoutes from './routes/UnauthorizedRoutes.js';
+import firebase from './services/firebase.js';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const authorized = useSelector((state) => state.auth.authorized);
+
+  useEffect(() => {
+    const authStateListener = firebase.auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({ type: 'SET_AUTHORIZED' });
+      } else {
+        dispatch({ type: 'SET_UNAUTHORIZED' });
+      }
+    });
+
+    // Clean up the listener on unmount
+    return () => {
+      authStateListener();
+    };
+  }, [dispatch]);
+
   return (
-    <Router>
-      <div style={{ backgroundColor: '#EDE4E0' }}>
-        <NavBar>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/:genre" element={<ChannelsByGenre />} />
-            <Route path="/genres" element={<AllGenres />} />
-          </Routes>
-        </NavBar>
-      </div>
-    </Router>
+    <div>
+      {authorized ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
+    </div>
   );
-}
+};
 
 export default App;

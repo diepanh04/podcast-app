@@ -4,35 +4,28 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { auth } from '../firebase_config';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { register } from '../actions/auth.js';
+import axios from 'axios';
 
 const Signin = () => {
-  const [nameRegister, setNameRegister] = useState("");
-  const [emailRegister, setEmailRegister] = useState("");
-  const [passwordRegister, setPasswordRegister] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
+  const handleChange = (e) => {
+    setNewUser({...newUser, [e.target.name]: e.target.value });
+  }
+
   const handleRegister = async () => {
-    try {
-      const newUser = await createUserWithEmailAndPassword(
-        auth,
-        emailRegister,
-        passwordRegister
-      );
-      console.log(newUser);
-
-      const response = await fetch('http://localhost:4000/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: nameRegister, email: emailRegister }),
-      });
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(register(newUser));
+    navigate('/signin');
   } 
 
   return (
@@ -47,25 +40,37 @@ const Signin = () => {
         <Grid item xs={8}>
           <TextField
             label="Full Name*"
+            name="name"
             placeholder="Enter your full name"
             fullWidth
-            onChange={(e) => setNameRegister(e.target.value)}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={8}>
           <TextField
             label="Email*"
+            name="email"
             placeholder="Enter your email"
             fullWidth
-            onChange={(e) => setEmailRegister(e.target.value)}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={8}>
           <TextField
             label="Password*"
+            name="password"
             placeholder="Enter your password"
             fullWidth
-            onChange={(e) => setPasswordRegister(e.target.value)}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <TextField
+            label="Confirm Password*"
+            name="confirmPassword"
+            placeholder="Re-enter your password"
+            fullWidth
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={8}>
