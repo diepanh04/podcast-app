@@ -27,6 +27,12 @@ const reducer = (state = initialState, action) => {
         authorized: false,
       }
     }
+    case 'AUTHENTICATE_USER': {
+      return {
+        ...state,
+        currUser: action.payload,
+      }
+    }
     default:
       return state;
   }

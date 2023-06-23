@@ -28,15 +28,10 @@ export const register = async (req, res) => {
     console.log(error);
     res.status(404).json({ message: error.message });
   }
-};
+}; 
 
-export const signin = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    // Add your sign-in logic here
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+export const authenticateUser = async (req, res) => {
+  res.status(200).json(req.user);  
 };
 
 export default router;
