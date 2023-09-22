@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from '../Pages/Home.js';
-import Dashboard from '../Pages/Dashboard.js'
-import Signin from '../Pages/Signin.js';
-import Register from '../Pages/Register.js';
-import ChannelsByGenre from '../Pages/ChannelsByGenre.js';
-import AllGenres from '../Pages/AllGenres.js';
-import UnauthorizedNavBar from '../Components/UnAuthorizedNavBar.js';
+import Home from '../containers/Home.js';
+import Dashboard from '../containers/Dashboard.js'
+import Signin from '../containers/auth/Signin.js';
+import Register from '../containers/auth/Register.js';
+import ChannelsByGenre from '../containers/show/ChannelsByGenre.js';
+import AllGenres from '../containers/show/AllGenres.js';
+import UnauthorizedNavBar from '../components/unauthorized/UnAuthorizedNavBar.js';
 
 export default function UnauthorizedRoutes() {
   return (
