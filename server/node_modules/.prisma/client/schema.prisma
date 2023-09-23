@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id              String        @id @default(cuid())
-  name            String
-  email           String        @unique
-  image           String?
-  hearts          Heart[]
+  id                    String          @id @default(cuid())
+  name                  String
+  email                 String          @unique
+  image                 String?
+  hearts                Heart[]
+  favouriteList         FavouriteList?
 }
 
 model Genre {
@@ -25,13 +26,15 @@ model Genre {
 }
 
 model Channel {
-  id              String          @id @default(cuid()) 
-  title           String
-  publisher       String          
-  thumbnail       String                  
-  genres          GenresOnChannels[]
-  episodes        Episode[]
-  channelHearts   ChannelHeart[]
+  id                  String          @id @default(cuid()) 
+  title               String
+  publisher           String          
+  thumbnail           String
+  description         String                 
+  genres              GenresOnChannels[]
+  episodes            Episode[]
+  channelHearts       ChannelHeart[]
+  favouriteChannels   FavouriteChannel[]     
 }
 
 model GenresOnChannels {
@@ -44,12 +47,13 @@ model GenresOnChannels {
 }
 
 model Episode {
-  id              String          @id @default(cuid()) 
-  title           String
-  thumbnail       String
-  channelId       String
-  channel         Channel         @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  episodeHearts   EpisodeHeart[]
+  id                    String          @id @default(cuid()) 
+  title                 String
+  thumbnail             String
+  channelId             String
+  channel               Channel         @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  episodeHearts         EpisodeHeart[]
+  favouriteEpisodes     FavouriteEpisode[]
 }
 
 model Heart {
@@ -75,6 +79,31 @@ model EpisodeHeart {
   heart       Heart     @relation(fields: [heartId], references: [id])
   episode     Episode   @relation(fields: [episodeId], references: [id], onDelete: Cascade)
 }
+
+model FavouriteList {
+  id                       String               @id @default(cuid()) 
+  user                     User                 @relation(fields: [userId], references: [id])
+  userId                   String               @unique
+  favouriteChannels        FavouriteChannel[]
+  favouriteEpisodes        FavouriteEpisode[]
+}
+
+model FavouriteChannel {
+  id                    String            @id @default(cuid())
+  channelId             String
+  favouriteListId       String 
+  channel               Channel           @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  favouriteList         FavouriteList     @relation(fields: [favouriteListId], references: [id], onDelete: Cascade)
+}
+
+model FavouriteEpisode {
+  id                    String            @id @default(cuid())
+  episodeId             String
+  favouriteListId       String
+  episode               Episode           @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  favouriteList         FavouriteList     @relation(fields: [favouriteListId], references: [id], onDelete: Cascade)
+}
+
 
 
 

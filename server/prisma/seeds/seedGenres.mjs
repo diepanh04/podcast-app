@@ -1,10 +1,10 @@
 import prismaClient from "../prismaClient.js";
 import { Client } from 'podcast-api';
-const client = Client({ apiKey: '6f228db1aec840ec96932ebdc92138e8' });
+const client = Client({ apiKey: '62d8df21df004406a436454ce14733f1' });
 
 const seedGenres = async () => {
   try {
-    const response = await client.fetchPodcastGenres({ top_level_only: 0 });
+    const response = await client.fetchPodcastGenres({ top_level_only: 1 });
     const genres = response.data.genres;
 
     const genreData = genres.map((genre) => ({

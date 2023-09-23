@@ -13,7 +13,7 @@ export default async function (req, res, next) {
       // Unauthorized
       return res.sendStatus(401);
     }
-    console.log(firebaseUser);
+
     const user = await prismaClient.user.findUnique({
       where: {
         id: firebaseUser.uid,

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default {
-  DATABSE_URL: process.env.DATABASE_URL,
+  DATABASE_URL: process.env.DATABASE_URL,
   FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
   FIREBASE_PRIVATE_KEY_ID: process.env.FIREBASE_PRIVATE_KEY_ID,
   FIREBASE_PRIVATE_KEY:

@@ -1,15 +1,15 @@
 import prismaClient from "../prismaClient.js";
 import { Client } from 'podcast-api';
 
-const client = Client({ apiKey: '62d8df21df004406a436454ce14733f1' });
+const client = Client({ apiKey: 'bee97ab3092b46448c1f94fbed327a79' });
 
 const seedChannels = async () => {
   try {
     const genres = await prismaClient.genre.findMany();
+    const genre_ids = genres.map((genre) => genre.id);
 
-    const promises = genres.slice(110, 120).map(async (genre) => {
+    const promises = genres.slice().map(async (genre) => {
       const genreId = genre.id;
-      const genreName = genre.name;
 
       const response = await client.fetchBestPodcasts({
         genre_id: genreId,
@@ -19,7 +19,7 @@ const seedChannels = async () => {
 
       const channels = response.data.podcasts;
       for (const channel of channels) {
-        const channelGenres = channel.genre_ids; // Assuming the API provides genre IDs for each channel
+        const channelGenres = channel.genre_ids;
 
         const createdChannel = await prismaClient.channel.create({
           data: {
@@ -28,13 +28,15 @@ const seedChannels = async () => {
             publisher: channel.publisher,
             thumbnail: channel.thumbnail,
             genres: {
-              create: channelGenres.map((genreId) => ({
-                genre: {
-                  connect: {
-                    id: genreId,
+              create: channelGenres
+                .filter(genreId => genre_ids.includes(genreId))
+                .map((genreId) => ({
+                  genre: {
+                    connect: {
+                      id: genreId,
+                    },
                   },
-                },
-              })),
+                })),
             },
           },
         });
